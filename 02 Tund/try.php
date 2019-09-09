@@ -35,5 +35,6 @@
     echo "<p>Leheavamise hetkel oli " .$partOfDay .	".</p>"; 
 	
   ?>
+  <hr>
 </body>
 </html>
