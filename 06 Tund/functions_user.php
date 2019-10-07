@@ -78,5 +78,50 @@ function signUp($name, $surname, $email, $gender, $birthDate, $password){
 	$mysqli->close();
 	return $notice;
   }//sisselogimine lõppeb
+  
+function updateuserprofile($userId ,$mydescription ,$mybgcolor, $mytxtcolor){
 
+	$notice = null;
+	$conn = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+	$stmt = $conn-> prepare ("INSERT INTO vpuserprofiles (userid, description, bgcolor, txtcolor) VALUES (?,?,?,?)");
+	echo $conn->error;
+	
+	//valmistame parool salvestamiseks ette
+	$stmt->bind_param("isss",$userId ,$mydescription ,$mybgcolor, $mytxtcolor);
+	
+	if($stmt->execute()){
+		$notice = "Salvestamine õnnestus!";
+	} else {
+		$notice = "Kastutaja loomisel tekkis tõrge: " .$stmt->error;
+	}
+	
+	$stmt->close();
+	$conn->close();
+	return $notice;
+}
+function readuserprofiledata($userId){
+	$notice = "";
+	$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+	$stmt = $mysqli->prepare("SELECT description, bgcolor, txtcolor FROM vpuserprofiles WHERE userId=?");
+	echo $mysqli->error;
+	$stmt->bind_param("i", $userId);
+	
+	if($stmt->execute()){
+		//kui päring õnnestus
+	  if($stmt->fetch()){
+		//kasutaja on olemas
+		$stmt->bind_result($mydescription ,$mybgcolor, $mytxtcolor);
+		  $stmt->close();
+		  $mysqli->close();
+	
+
+		}	
+	  } else {
+		$notice = "Sellist kasutajat (" .$email .") ei leitud!";  
+	  }
+	
+	$stmt->close();
+	$mysqli->close();
+	return $notice;
+  }
 ?>

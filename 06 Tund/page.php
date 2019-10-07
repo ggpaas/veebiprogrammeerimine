@@ -130,6 +130,8 @@ require("header.php");
 	  
 	  <input name="login" type="submit" value="Logi sisse">&nbsp;<span><?php echo $notice; ?>
 	</form>
+	<h2>Loo kasutja</h2>
+	<p>Loo endale meie lehe <a herf="newuser.php">kasutaja</a></p>
 	<hr>
   <?php
   echo $randomImgHTML; 
